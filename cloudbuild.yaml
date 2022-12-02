@@ -1,0 +1,19 @@
+steps:
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args: ['-c', 'sed -ri -e "s|%JIT_ACCESS_SERVICE_ACCOUNT_EMAIL%|$$JIT_ACCESS_SERVICE_ACCOUNT_EMAIL|" -e "s|%JIT_ACCESS_SCOPE%|$$JIT_ACCESS_SCOPE|" sources/jit-access-app.yaml']
+  secretEnv: ['JIT_ACCESS_SERVICE_ACCOUNT_EMAIL', 'JIT_ACCESS_SCOPE']
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+    - 'app'
+    - 'deploy'
+    - 'jit-access-app.yaml'
+  dir: 'sources'
+availableSecrets:
+  secretManager:
+  - versionName: 'projects/zeroni-common-secrets/secrets/jit-access-service-account-email/versions/latest'
+    env: 'JIT_ACCESS_SERVICE_ACCOUNT_EMAIL'
+  - versionName: 'projects/zeroni-common-secrets/secrets/jit-access-scope/versions/latest'
+    env: 'JIT_ACCESS_SCOPE'
+options:
+  logging: CLOUD_LOGGING_ONLY

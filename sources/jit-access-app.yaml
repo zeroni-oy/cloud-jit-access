@@ -1,0 +1,8 @@
+runtime: java11
+instance_class: F2
+service_account: %JIT_ACCESS_SERVICE_ACCOUNT_EMAIL%
+env_variables:
+  RESOURCE_SCOPE: %JIT_ACCESS_SCOPE%
+  ELEVATION_DURATION: 60
+  JUSTIFICATION_HINT: "Task ID"
+  JUSTIFICATION_PATTERN: ".*"
